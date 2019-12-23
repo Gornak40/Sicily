@@ -21,6 +21,7 @@ Game = Game()
 while Game.redScore < 4 and Game.blackScore < 4:
     Game.blackCard = take(blackHand)
     blackHand.append(take(blackCards)) if blackCards else None
+    print('Gang Info:',Game.blackCard) if Game.redGangBoost else None
     print(redHand)
     redNum = int(input())
     ind = [i for i in range(len(redHand)) if redHand[i].power == redNum][0] 
@@ -29,8 +30,8 @@ while Game.redScore < 4 and Game.blackScore < 4:
     fight(Game)
     print('Scores:', Game.redScore, Game.blackScore)
     print('HoldScore:', Game.holdScore)
-    print('GangBoosts:', Game.redGangBoost, Game.blackGangBoost)
-    print('Boosts:', Game.redBoost, Game.blackBoost)
+#     print('GangBoosts:', Game.redGangBoost, Game.blackGangBoost)
+#     print('Boosts:', Game.redBoost, Game.blackBoost)
     print()
 
 # results
