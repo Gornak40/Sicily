@@ -1,8 +1,8 @@
 from engine import *
 from random import choice, randrange
 from results import *
-take = lambda arr: arr.pop(randrange(len(arr)))
 
+take = lambda arr: arr.pop(randrange(len(arr)))
 redCards = CARDS.copy()
 blackCards = CARDS.copy()
 
@@ -24,7 +24,7 @@ while Game.redScore < 4 and Game.blackScore < 4:
     print('Gang Info:', Game.blackCard) if Game.redGangBoost else None
     print(redHand)
     redNum = int(input())
-    ind = [i for i in range(len(redHand)) if redHand[i].power == redNum][0] 
+    ind = [i for i in range(len(redHand)) if redHand[i].power == redNum][0]
     Game.redCard = redHand.pop(ind)
     redHand.append(take(redCards)) if redCards else None
     fight(Game)
