@@ -21,7 +21,7 @@ Game = Game()
 while Game.redScore < 4 and Game.blackScore < 4:
     Game.blackCard = take(blackHand)
     blackHand.append(take(blackCards)) if blackCards else None
-    print('Gang Info:',Game.blackCard) if Game.redGangBoost else None
+    print('Gang Info:', Game.blackCard) if Game.redGangBoost else None
     print(redHand)
     redNum = int(input())
     ind = [i for i in range(len(redHand)) if redHand[i].power == redNum][0] 
@@ -36,10 +36,3 @@ while Game.redScore < 4 and Game.blackScore < 4:
 
 # results
 print('{} PLAYER IS THE WINNER'.format('RED' if Game.redScore > Game.blackScore else 'BLACK'))
-
-
-
-
-
-
-
