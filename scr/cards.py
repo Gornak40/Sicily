@@ -2,7 +2,7 @@ class Card:
     def __init__(self, name, power):
         self.name = name
         self.power = power
-        self.image = '../data/{}.png'.format(self.name)
+        self.image = '{}.png'.format(self.name)
     
     def __repr__(self):
         return '{}({})'.format(self.name, self.power)
