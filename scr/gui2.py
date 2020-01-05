@@ -6,19 +6,28 @@ from engine import *
 
 
 def loadImage(name):
-    return pg.transform.rotozoom(pg.image.load('../data/' + name), 0, 0.6)
+    image = pg.transform.rotozoom(pg.image.load('../data/' + name), 0, 0.6)
+    return image
 
 
-def lastRender(redWins):
-    screen.fill(RED if redWins else BLACK)
+def lastRender():
+    if Game.redScore == Game.blackScore:
+        color = BLUE
+        text = 'DRAW'
+    elif Game.redScore > Game.blackScore:
+        color = RED
+        text = 'RED PLAYER IS THE WINNER'
+    else:
+        color = BLACK
+        text = 'BLACK PLAYER IS THE WINNER'
+    screen.fill(color)
     for i in range(len(redHand)):
         screen.blit(IMG[redHand[i].name], redRects[i])
     screen.blit(image if not blackOpen else IMG[Game.blackCard.name], blackRect)
     holdScore = font.render(str(Game.holdScore), True, WHITE)
     redScore = font.render(str(Game.redScore), True, WHITE)
     blackScore = font.render(str(Game.blackScore), True, WHITE)
-    winner = 'RED' if redWins else 'BLACK'
-    result = font1.render('{} PLAYER IS THE WINNER'.format(winner), True, WHITE)
+    result = font1.render(text, True, WHITE)
     holdScoreRect = holdScore.get_rect()
     redScoreRect = redScore.get_rect()
     blackScoreRect = blackScore.get_rect()
@@ -126,7 +135,6 @@ blackCards.append(redTraitor)
 redHand = [take(redCards) for _ in range(3)]
 blackHand = [take(blackCards) for _ in range(3)]
 Game = Game()
-Game.blackCard = choice(CARDS)
 
 # pygame init
 pg.init()
@@ -145,9 +153,12 @@ while running:
         if event.type == pg.QUIT:
             running = False
         update(event) if gaming else None
-    render(blackOpen) if gaming else lastRender(Game.redScore > Game.blackScore)
+    render(blackOpen) if gaming else lastRender()
     if (Game.redScore >= 4 or Game.blackScore >= 4) and gaming:
         print('{} PLAYER IS THE WINNER'.format('RED' if Game.redScore > Game.blackScore else 'BLACK'))
+        gaming = False
+    if (not redHand and gaming):
+        print('DRAW')
         gaming = False
 
 pg.quit()
