@@ -57,17 +57,24 @@ def render(blackOpen):
     holdScore = font.render(str(Game.holdScore), True, BLUE)
     redScore = font.render(str(Game.redScore), True, RED)
     blackScore = font.render(str(Game.blackScore), True, BLACK)
+    text = Game.story if Game.redCard is not None else ''
+    result = font1.render(text, True, BLUE)
     holdScoreRect = holdScore.get_rect()
     redScoreRect = redScore.get_rect()
     blackScoreRect = blackScore.get_rect()
+    resultRect = result.get_rect()
     x = WIDTH // 2 - cardSizeX - dlt - redScoreRect.width // 2
     y = dlt + cardSizeY // 2 - redScoreRect.height // 2
     redScoreRect.topleft = x, y
     x += dlt * 2 + cardSizeX * 2
     blackScoreRect.topleft = x, y
+    x = WIDTH // 2 - resultRect.width // 2
+    y = HEIGHT // 2 - resultRect.height // 2
+    resultRect.topleft = x, y
     screen.blit(holdScore, holdScoreRect)
     screen.blit(redScore, redScoreRect)
     screen.blit(blackScore, blackScoreRect)
+    screen.blit(result, resultRect)
     pg.display.flip()
     pg.display.update()
     clock.tick(FPS)
@@ -104,6 +111,7 @@ WHITE = pg.Color('white')
 BLACK = pg.Color('black')
 RED = pg.Color('red')
 BLUE = pg.Color('blue')
+MAGENTA = pg.Color('magenta')
 IMG = dict()
 for card in CARDS:
     IMG[card.name] = loadImage(card.image)

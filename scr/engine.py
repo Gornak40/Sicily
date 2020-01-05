@@ -10,6 +10,7 @@ def fight(Game):
     red.power += Game.redBoost * 2
     black.power += Game.blackBoost * 2
     print(red, 'vs', black)
+    Game.story = '{} vs {}'.format(red, black)
     
     # Killer Spec
     redSpec = black != Killer
