@@ -101,7 +101,7 @@ def update(event):
             Game.redCard = redHand.pop(redHand.index(card))
             redHand.append(take(redCards)) if redCards else None
             fight(Game)
-            blackCard = take(blackHand)
+            blackCard = take(blackHand) if blackHand else None
             blackHand.append(take(blackCards)) if blackCards else None
             print('Scores:', Game.redScore, Game.blackScore)
             print('HoldScore:', Game.holdScore)
