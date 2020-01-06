@@ -1,4 +1,5 @@
 import pygame as pg
+from os import startfile
 from cards import *
 from random import choice, randrange
 from results import *
@@ -165,6 +166,8 @@ while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
+        if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+            startfile('..\\data\\rules.pdf')
         update(event) if gaming else None
     render(blackOpen) if gaming else lastRender()
     if (Game.redScore >= 4 or Game.blackScore >= 4) and gaming:
