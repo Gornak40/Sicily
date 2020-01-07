@@ -1,7 +1,7 @@
 import pygame as pg
-from os import startfile
+from os import startfile, listdir
 from cards import *
-from random import choice, randrange
+from random import choice, randrange, shuffle
 from results import *
 from engine import *
 
@@ -94,7 +94,7 @@ def update(event):
         for i in range(3):
             if redRects[i].collidepoint(pos) and i < len(redHand):
                 card = redHand[i]
-# game process        
+        # game process        
         if card is not None:
             blackOpen = True
             Game.blackCard = blackCard.copy()
@@ -147,6 +147,14 @@ pg.display.set_caption('Sicily')
 pg.display.set_icon(pg.image.load('../data/icon.png'))
 font = pg.font.SysFont('arial', 150)
 font1 = pg.font.SysFont('arial', 50)
+dataDir = listdir('../data')
+music = list(filter(lambda name: name[-4:] in {'.mp3', '.wav'}, dataDir))
+shuffle(music)
+musicID = 0
+pg.mixer.music.load('../data/' + music[musicID])
+pg.mixer.music.play()
+pg.mixer.music.pause()
+playing = False
 
 while running:
     
@@ -177,6 +185,15 @@ while running:
                 startfile('..\\data\\rules.pdf')
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 restart = True
+            # music
+            if event.type == pg.KEYDOWN and event.key == pg.K_LCTRL:
+                playing ^= True
+                pg.mixer.music.pause() if not playing else pg.mixer.music.unpause()
+            if event.type == pg.KEYDOWN and event.key == pg.K_TAB:
+                pg.mixer.music.pause() if playing else None
+                musicID = (musicID + 1) % len(music)
+                pg.mixer.music.load('../data/' + music[musicID])
+                pg.mixer.music.play()
             update(event) if gaming else None
         render(blackOpen) if gaming else lastRender()
         if (Game.redScore >= 4 or Game.blackScore >= 4) and gaming:
