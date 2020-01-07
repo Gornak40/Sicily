@@ -4,6 +4,8 @@ from cards import *
 from random import choice, randrange, shuffle
 from results import *
 from engine import *
+from tkinter.messagebox import showinfo
+from tkinter import Tk
 
 
 def loadImage(name):
@@ -139,6 +141,7 @@ blackRect.topleft = WIDTH // 2 - cardSizeX // 2, dlt
 
 # pygame init
 pg.init()
+Tk().withdraw()
 screen = pg.display.set_mode(SIZE)
 running = True
 restart = False
@@ -194,6 +197,9 @@ while running:
                 musicID = (musicID + 1) % len(music)
                 pg.mixer.music.load('../data/' + music[musicID])
                 pg.mixer.music.play()
+            if event.type == pg.KEYDOWN and event.key == pg.K_F1:
+                text = 'ESC - restart\nSPACE - read rules\nCTRL - pause/play music\nTAB - change music'
+                showinfo('Sicily', text)
             update(event) if gaming else None
         render(blackOpen) if gaming else lastRender()
         if (Game.redScore >= 4 or Game.blackScore >= 4) and gaming:
